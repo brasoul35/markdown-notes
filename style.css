@@ -1,0 +1,113 @@
+/* styles for the markdown notes app */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  color: #222;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #34495e;
+  color: #fff;
+  padding: 15px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 55px);
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+#searchBox {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#noteList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#noteList li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+#noteList li:hover {
+  background-color: #f0f0f0;
+}
+
+#noteList li.active {
+  background-color: #d6e4f0;
+}
+
+.editor {
+  flex: 1;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+#noteTitle {
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.panes {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+}
+
+#noteBody {
+  flex: 1;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  resize: none;
+}
+
+#preview {
+  flex: 1;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.buttons button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  cursor: pointer;
+}

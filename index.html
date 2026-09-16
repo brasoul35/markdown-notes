@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Markdown Notes</h1>
+  </header>
+
+  <div class="container">
+    <!-- left side: list of notes -->
+    <div class="sidebar">
+      <button id="newNoteBtn">+ New Note</button>
+      <input type="text" id="searchBox" placeholder="Search notes...">
+      <ul id="noteList"></ul>
+    </div>
+
+    <!-- right side: editor and preview -->
+    <div class="editor">
+      <input type="text" id="noteTitle" placeholder="Note title">
+      <div class="panes">
+        <textarea id="noteBody" placeholder="Write your note in Markdown..."></textarea>
+        <div id="preview"></div>
+      </div>
+      <div class="buttons">
+        <button id="saveBtn">Save</button>
+        <button id="deleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="markdown.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
