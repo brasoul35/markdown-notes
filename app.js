@@ -1,0 +1,146 @@
+// Main app logic for the notes.
+// Notes are kept in an array and saved to localStorage so they
+// are still there when the page is reopened.
+
+var notes = [];
+var currentId = null;
+
+// grab the elements we need
+var noteList = document.getElementById("noteList");
+var noteTitle = document.getElementById("noteTitle");
+var noteBody = document.getElementById("noteBody");
+var preview = document.getElementById("preview");
+var searchBox = document.getElementById("searchBox");
+
+// load saved notes from the browser
+function loadNotes() {
+  var saved = localStorage.getItem("notes");
+  if (saved) {
+    notes = JSON.parse(saved);
+  }
+}
+
+// save the notes array to the browser
+function saveToStorage() {
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+// show the list of notes on the left side
+function drawList() {
+  var search = searchBox.value.toLowerCase();
+  noteList.innerHTML = "";
+
+  for (var i = 0; i < notes.length; i++) {
+    var note = notes[i];
+
+    // filter by search text (title or body)
+    var text = (note.title + " " + note.body).toLowerCase();
+    if (search !== "" && text.indexOf(search) === -1) {
+      continue;
+    }
+
+    var li = document.createElement("li");
+    li.textContent = note.title === "" ? "(untitled)" : note.title;
+    if (note.id === currentId) {
+      li.className = "active";
+    }
+    // use a closure so each item remembers its own id
+    li.onclick = (function (id) {
+      return function () {
+        openNote(id);
+      };
+    })(note.id);
+
+    noteList.appendChild(li);
+  }
+}
+
+// find a note by its id
+function findNote(id) {
+  for (var i = 0; i < notes.length; i++) {
+    if (notes[i].id === id) {
+      return notes[i];
+    }
+  }
+  return null;
+}
+
+// open a note in the editor
+function openNote(id) {
+  var note = findNote(id);
+  if (note === null) {
+    return;
+  }
+  currentId = id;
+  noteTitle.value = note.title;
+  noteBody.value = note.body;
+  updatePreview();
+  drawList();
+}
+
+// make a brand new empty note
+function newNote() {
+  var note = {
+    id: Date.now(),
+    title: "",
+    body: ""
+  };
+  notes.push(note);
+  currentId = note.id;
+  noteTitle.value = "";
+  noteBody.value = "";
+  updatePreview();
+  saveToStorage();
+  drawList();
+}
+
+// save the note that is currently open
+function saveNote() {
+  if (currentId === null) {
+    newNote();
+  }
+  var note = findNote(currentId);
+  if (note === null) {
+    return;
+  }
+  note.title = noteTitle.value;
+  note.body = noteBody.value;
+  saveToStorage();
+  drawList();
+}
+
+// delete the current note
+function deleteNote() {
+  if (currentId === null) {
+    return;
+  }
+  var newList = [];
+  for (var i = 0; i < notes.length; i++) {
+    if (notes[i].id !== currentId) {
+      newList.push(notes[i]);
+    }
+  }
+  notes = newList;
+  currentId = null;
+  noteTitle.value = "";
+  noteBody.value = "";
+  preview.innerHTML = "";
+  saveToStorage();
+  drawList();
+}
+
+// update the live markdown preview
+function updatePreview() {
+  preview.innerHTML = renderMarkdown(noteBody.value);
+}
+
+// connect the buttons and inputs
+document.getElementById("newNoteBtn").onclick = newNote;
+document.getElementById("saveBtn").onclick = saveNote;
+document.getElementById("deleteBtn").onclick = deleteNote;
+noteBody.oninput = updatePreview;
+searchBox.oninput = drawList;
+
+// start the app
+loadNotes();
+drawList();
