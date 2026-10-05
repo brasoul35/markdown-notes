@@ -11,6 +11,7 @@ var noteTitle = document.getElementById("noteTitle");
 var noteBody = document.getElementById("noteBody");
 var preview = document.getElementById("preview");
 var searchBox = document.getElementById("searchBox");
+var counts = document.getElementById("counts");
 
 // load saved notes from the browser
 function loadNotes() {
@@ -75,6 +76,7 @@ function openNote(id) {
   noteTitle.value = note.title;
   noteBody.value = note.body;
   updatePreview();
+  updateCounts();
   drawList();
 }
 
@@ -90,6 +92,7 @@ function newNote() {
   noteTitle.value = "";
   noteBody.value = "";
   updatePreview();
+  updateCounts();
   saveToStorage();
   drawList();
 }
@@ -125,6 +128,7 @@ function deleteNote() {
   noteTitle.value = "";
   noteBody.value = "";
   preview.innerHTML = "";
+  updateCounts();
   saveToStorage();
   drawList();
 }
@@ -132,6 +136,23 @@ function deleteNote() {
 // update the live markdown preview
 function updatePreview() {
   preview.innerHTML = renderMarkdown(noteBody.value);
+}
+
+// show how many words and characters are in the current note
+function updateCounts() {
+  var text = noteBody.value;
+  var chars = text.length;
+
+  // split on spaces/newlines and ignore empty pieces to count words
+  var words = 0;
+  var parts = text.split(/\s+/);
+  for (var i = 0; i < parts.length; i++) {
+    if (parts[i] !== "") {
+      words++;
+    }
+  }
+
+  counts.textContent = "Words: " + words + " | Characters: " + chars;
 }
 
 // download the current note as a .md file
@@ -180,10 +201,14 @@ document.getElementById("saveBtn").onclick = saveNote;
 document.getElementById("exportBtn").onclick = exportNote;
 document.getElementById("deleteBtn").onclick = deleteNote;
 themeBtn.onclick = toggleTheme;
-noteBody.oninput = updatePreview;
+noteBody.oninput = function () {
+  updatePreview();
+  updateCounts();
+};
 searchBox.oninput = drawList;
 
 // start the app
 applyTheme(localStorage.getItem("theme"));
 loadNotes();
 drawList();
+updateCounts();
