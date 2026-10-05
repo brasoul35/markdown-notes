@@ -134,6 +134,23 @@ function updatePreview() {
   preview.innerHTML = renderMarkdown(noteBody.value);
 }
 
+// download the current note as a .md file
+function exportNote() {
+  var name = noteTitle.value.trim();
+  if (name === "") {
+    name = "note";
+  }
+  var blob = new Blob([noteBody.value], { type: "text/markdown" });
+  var url = URL.createObjectURL(blob);
+
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = name + ".md";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
 // switch between light and dark mode and remember the choice
 var themeBtn = document.getElementById("themeBtn");
 
@@ -160,6 +177,7 @@ function toggleTheme() {
 // connect the buttons and inputs
 document.getElementById("newNoteBtn").onclick = newNote;
 document.getElementById("saveBtn").onclick = saveNote;
+document.getElementById("exportBtn").onclick = exportNote;
 document.getElementById("deleteBtn").onclick = deleteNote;
 themeBtn.onclick = toggleTheme;
 noteBody.oninput = updatePreview;
