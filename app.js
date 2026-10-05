@@ -134,13 +134,38 @@ function updatePreview() {
   preview.innerHTML = renderMarkdown(noteBody.value);
 }
 
+// switch between light and dark mode and remember the choice
+var themeBtn = document.getElementById("themeBtn");
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    document.body.classList.add("dark");
+    themeBtn.textContent = "Light Mode";
+  } else {
+    document.body.classList.remove("dark");
+    themeBtn.textContent = "Dark Mode";
+  }
+}
+
+function toggleTheme() {
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "light");
+    applyTheme("light");
+  } else {
+    localStorage.setItem("theme", "dark");
+    applyTheme("dark");
+  }
+}
+
 // connect the buttons and inputs
 document.getElementById("newNoteBtn").onclick = newNote;
 document.getElementById("saveBtn").onclick = saveNote;
 document.getElementById("deleteBtn").onclick = deleteNote;
+themeBtn.onclick = toggleTheme;
 noteBody.oninput = updatePreview;
 searchBox.oninput = drawList;
 
 // start the app
+applyTheme(localStorage.getItem("theme"));
 loadNotes();
 drawList();
