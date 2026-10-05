@@ -11,6 +11,11 @@ the browser's local storage, so they stay even after you close the page.
 3. **Local storage saving** - notes are saved in the browser so they are kept
    between visits.
 4. **Search** - filter your notes by typing in the search box.
+5. **Dark mode** - switch between a light and dark theme, and the choice is
+   remembered for next time.
+6. **Export as .md** - download the current note as a Markdown file.
+7. **Word and character count** - a live count below the editor updates as you
+   type.
 
 ## How to run
 No installation or build step is needed. Just open `index.html` in a web browser.
