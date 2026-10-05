@@ -110,6 +110,12 @@ header h1 {
   overflow-y: auto;
 }
 
+#counts {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
 .buttons {
   margin-top: 10px;
 }
