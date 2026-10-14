@@ -48,7 +48,7 @@ function renderMarkdown(text) {
     } else if (line.indexOf("## ") === 0) {
       html += "<h2>" + inlineFormat(line.substring(3)) + "</h2>";
     } else if (line.indexOf("# ") === 0) {
-      html += "<h1>" + inlineFormat(line.substring(2)) + "</h1>";
+      html += "<h1>" + inlineFormat(line.substring(3)) + "</h1>";
     } else if (line.trim() === "") {
       // blank line, skip
     } else {
