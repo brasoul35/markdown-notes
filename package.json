@@ -1,0 +1,16 @@
+{
+  "name": "markdown-notes",
+  "version": "1.0.0",
+  "description": "A simple browser based markdown notes app",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "markdown.js"
+    ]
+  }
+}

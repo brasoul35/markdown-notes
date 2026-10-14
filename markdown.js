@@ -62,3 +62,8 @@ function renderMarkdown(text) {
 
   return html;
 }
+
+// make the functions available to the tests when running under Node
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { renderMarkdown: renderMarkdown, inlineFormat: inlineFormat, escapeHtml: escapeHtml };
+}
